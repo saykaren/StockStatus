@@ -22,7 +22,9 @@ export const fetchData = (
     setError,
     setLoading,
 ) =>{
-    let url = 'https://randomuser.me/api/?results=100';
+    // let url = 'https://randomuser.me/api/?results=100?format=json';
+    // let url = 'http://jsonplaceholder.typicode.com/users';
+    const url = 'https://uinames.com/api/';
 
     setLoading(true);
     async function fetchDataAPI(){
@@ -37,5 +39,7 @@ export const fetchData = (
 
     fetchDataAPI();
 }
+
+
 
 export default fetchData;
