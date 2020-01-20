@@ -1,5 +1,19 @@
 @import './variables.scss';
 
 .card-section {
+    
+    display: flex;
+    flex-wrap: wrap;
+}
+
+// .card-name-details {
+
+// }
+
+.card-individual {
     background-color: $card-color;
+    padding: 1rem;
+    margin: 1rem;
+    width: 20%;
+    list-style-type: none;
 }

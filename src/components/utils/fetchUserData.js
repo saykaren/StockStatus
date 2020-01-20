@@ -1,45 +1,48 @@
-// export const fetchData = (
-//     setUserData: (dataObject: any) =>void,
-//     setError: string,
-//     setLoading: boolean,
-// ) =>{
-//     let url = 'https://randomuser.me/api/?results=100';
+// // export const fetchData = (
+// //     setUserData: (dataObject: any) =>void,
+// //     setError: string,
+// //     setLoading: boolean,
+// // ) =>{
+// //     let url = 'https://randomuser.me/api/?results=100';
+
+// //     setLoading(true);
+// //     async function fetch(){
+// //         const res = await fetch(url);
+// //         res
+// //             .json()
+// //             .then(res=>setUserData(res))
+// //             .then(setLoading(false))
+// //             .catch(err=>setError(err));
+    
+// //     }
+// // }
+
+// export const fetchData = ({
+//     setUserData,
+//     setError,
+//     setLoading,
+// }) =>{
+//     let url = 'https://randomuser.me/api/?results=10';
+//     // let url = 'http://jsonplaceholder.typicode.com/users';
+//     // const url = 'https://uinames.com/api/';
 
 //     setLoading(true);
-//     async function fetch(){
+//     async function fetchDataAPI(){
 //         const res = await fetch(url);
+
 //         res
 //             .json()
 //             .then(res=>setUserData(res))
 //             .then(setLoading(false))
 //             .catch(err=>setError(err));
+            
     
 //     }
+    
+//     fetchDataAPI();
+    
 // }
 
-export const fetchData = (
-    setUserData,
-    setError,
-    setLoading,
-) =>{
-    // let url = 'https://randomuser.me/api/?results=100?format=json';
-    // let url = 'http://jsonplaceholder.typicode.com/users';
-    const url = 'https://uinames.com/api/';
-
-    setLoading(true);
-    async function fetchDataAPI(){
-        const res = await fetch(url);
-        res
-            .json()
-            .then(res=>setUserData(res))
-            .then(setLoading(false))
-            .catch(err=>setError(err));
-    
-    }
-
-    fetchDataAPI();
-}
 
 
-
-export default fetchData;
+// export default fetchData;
