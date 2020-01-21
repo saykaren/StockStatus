@@ -1,38 +1,30 @@
 import React from 'react';
-// import './../styling/App.scss';
-// import Card from './Card';
 import './../styling/Card.scss';
 
-
-const Card = ({data})=>{
+const Card = ({data, setModal, modal})=>{
   console.log(data);
 
     return(
         <section className="card-section">
             {data && data.map(userInfo =>(
               <ul key={userInfo.id} className="card-individual">
-                User Information: 
                 <li className="card-name-details">
-                {userInfo.name}
+                  <label>User Information:</label> 
+                  {userInfo.name}
                 </li>
                 <li className="card-name-details">
-                  Username: 
-                {userInfo.username}
+                  <label>Username:</label> 
+                  {userInfo.username}
                 </li>
                 <li className="card-name-details">
-                  email: 
-                {userInfo.email}
+                  <label>email:</label> 
+                  {userInfo.email}
                 </li>
-                
+                <button onClick={()=>setModal({...modal, active: true, dataID: userInfo.id})}>More Info</button>
               </ul>
             ))}
-
-
-
         </section>
-        
-    )
-    
+    );
 }
 
 export default Card;
