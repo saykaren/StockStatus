@@ -30,7 +30,21 @@ const App = ()=>{
       {loading ? <div>Loading, Please wait</div> : 
             <main>
              <Card data={userData} setModal={setModal} modal={modal}/>
-             <div>Modal is: {modal.dataID}</div>
+
+             {modal.active ? 
+              <div className="modal">
+                <h2>Modal is: {modal.dataID}</h2>
+                <div className='content'>
+                  Details here: {modal.dataID}
+                  
+       
+                </div>
+                <div className="actions">
+                  <button onClick={()=>setModal({active: false, dataID: 1})}>X</button>
+                </div>
+                
+              </div> : <></>}
+ 
            </main>
       }
 
