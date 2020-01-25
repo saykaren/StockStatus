@@ -29,21 +29,32 @@ const App = ()=>{
       {error ? <div>{error}</div> : <></>}
       {loading ? <div>Loading, Please wait</div> : 
             <main>
-             <Card data={userData} setModal={setModal} modal={modal}/>
+             <Card data={userData} setModal={setModal} modal={modal} setMemberData={setMemberData}/>
 
-             {modal.active ? 
+             {modal.active && 
               <div className="modal">
-                <h2>Modal is: {modal.dataID}</h2>
+                <h2>Name: {memberData.name}</h2>
                 <div className='content'>
-                  Details here: {modal.dataID}
-                  
+                  <ul>
+                    <li>Email: {memberData.email}</li>
+                    <li>Address: 
+                      {memberData.address.street}
+                      {memberData.address.suite}
+                      {memberData.address.city}, 
+                      {memberData.address.zipcode}
+                      </li>
+                    <li>
+                      Phone: {memberData.phone}
+                    </li>
+                  </ul>
+                                  
        
                 </div>
                 <div className="actions">
                   <button onClick={()=>setModal({active: false, dataID: 1})}>X</button>
                 </div>
                 
-              </div> : <></>}
+              </div>}
  
            </main>
       }
