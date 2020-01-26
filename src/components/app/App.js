@@ -42,12 +42,6 @@ const App = ()=>{
                 <div className='modal-content'>
                   <ul>
                     <li className='modal-details'>Email: {memberData.email}</li>
-                    <li className='modal-details'>Address: 
-                      {memberData.address.street}
-                      {memberData.address.suite}
-                      {memberData.address.city}, 
-                      {memberData.address.zipcode}
-                      </li>
                     <li className='modal-details'>
                       Phone: {memberData.phone}
                     </li>
