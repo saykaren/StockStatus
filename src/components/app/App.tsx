@@ -16,7 +16,7 @@ interface AppProps {
 interface modalProps {
   active: boolean;
   dataID: number;
-  setModal: (arg1: boolean, arg2: number)=>({active: false, dataID: number});
+  setModal: (arg1: boolean, arg2: number) => { active: false; dataID: number };
 }
 
 const App = ({  }: AppProps) => {
@@ -47,10 +47,11 @@ const App = ({  }: AppProps) => {
             modal={modal}
             setMemberData={setMemberData}
           />
-          {modal.active && (
+          {modal.active && memberData && (
             <div className="modal">
               <h2 className="modal-header">
-                Name: {memberData.name}
+
+                {memberData.name && (<div>Name: {memberData.name}</div>)}
                 <button
                   className="modal-close"
                   onClick={() => setModal({ active: false, dataID: 1 })}

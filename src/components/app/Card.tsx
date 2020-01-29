@@ -13,10 +13,15 @@ interface modalProps {
 
 interface CardProps {
   data: userJsonPlaceHolder;
-  setModal: (arg2: modalProps) => modalProps;
+  // setModal: (arg2: modalProps) => modalProps;
+  setModal: (arg2: modalProps) => void;
   modal: modalProps;
   doc?: any;
-  setMemberData: (arg1: dataProps) => dataProps;
+  setMemberData: (arg1: dataProps) => void;
+}
+
+interface userInfoProps {
+  userInfo: dataProps;
 }
 
 const Card = ({ data, setModal, modal, setMemberData }: CardProps) => {
