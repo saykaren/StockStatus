@@ -4,7 +4,6 @@ import {
   userJsonPlaceHolder,
   dataProps,
 } from './../../interface/DataRecipient';
-import { karenSetData, mockItem } from './../data';
 
 interface modalProps {
   active: boolean;
@@ -13,57 +12,22 @@ interface modalProps {
 
 interface CardProps {
   data: userJsonPlaceHolder;
-  // setModal: (arg2: modalProps) => modalProps;
   setModal: (arg2: modalProps) => void;
   modal: modalProps;
   doc?: any;
   setMemberData: (arg1: dataProps) => void;
 }
 
-interface userInfoProps {
-  userInfo: dataProps;
-}
-
 const Card = ({ data, setModal, modal, setMemberData }: CardProps) => {
-  const testingData = {
-    id: 1,
-    name: 'Leanne Graham',
-    username: 'Bret',
-    email: 'Sincere@april.biz',
-    address: {
-      street: 'Kulas Light',
-      suite: 'Apt. 556',
-      city: 'Gwenborough',
-      zipcode: '92998-3874',
-      geo: {
-        lat: '-37.3159',
-        lng: '81.1496',
-      },
-    },
-    phone: '1-770-736-8031 x56442',
-    website: 'hildegard.org',
-    company: {
-      name: 'Romaguera-Crona',
-      catchPhrase: 'Multi-layered client-server neural-net',
-      bs: 'harness real-time e-markets',
-    },
-  };
+
 
   const handleClick = (activeUserID: number) => {
-    // setModal({...modal, active: true, dataID: activeUserID});
     setModal({ ...modal, active: true, dataID: activeUserID });
-    // const newModalUser = data.filter((x)=>x.id === activeUserID);
-    // const newModalUser = data.filter((x : dataProps)=>x.id ===activeUserID);
-    const newTesting = testingData;
-    const newModalUser = data.map((userInfo) => {
+    data.map((userInfo) => {
       if (userInfo.id === activeUserID) {
         setMemberData(userInfo);
       }
     });
-    // const newModalUser = karenSetData;
-    // setModal({...modal});
-    // setMemberData(newModalUser);
-    setMemberData(testingData);
   };
 
   return (

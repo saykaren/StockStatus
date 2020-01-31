@@ -1,14 +1,3 @@
-export default interface DataRecipient {
-  gender: string;
-  name: object;
-  location: object;
-  email: string;
-  login: object;
-  dob: object;
-  picture: object;
-  nat: string;
-}
-
 export interface addressObjectProps {
   street: string;
   suite: string;
@@ -18,8 +7,10 @@ export interface addressObjectProps {
 }
 
 export interface userJsonPlaceHolder {
-    filter(arg0: (x: dataProps) => JSX.Element): import("react").ReactNode;
-    map(arg0: (userInfo: dataProps) => JSX.Element): import("react").ReactNode;
+  filter(arg0: (x: dataProps) => JSX.Element | void): import('react').ReactNode;
+  map(
+    arg0: (userInfo: dataProps) => JSX.Element | void,
+  ): import('react').ReactNode;
   [index: number]: {
     id: number;
     name: string;

@@ -7,19 +7,7 @@ import {
   dataProps,
 } from './../../interface/DataRecipient';
 
-interface AppProps {
-  userData: userJsonPlaceHolder;
-  loading: () => boolean;
-  error: () => boolean;
-}
-
-interface modalProps {
-  active: boolean;
-  dataID: number;
-  setModal: (arg1: boolean, arg2: number) => { active: false; dataID: number };
-}
-
-const App = ({  }: AppProps) => {
+const App = () => {
   const [userData, setUserData] = useState<userJsonPlaceHolder>([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -50,8 +38,7 @@ const App = ({  }: AppProps) => {
           {modal.active && memberData && (
             <div className="modal">
               <h2 className="modal-header">
-
-                {memberData.name && (<div>Name: {memberData.name}</div>)}
+                {memberData.name && <div>Name: {memberData.name}</div>}
                 <button
                   className="modal-close"
                   onClick={() => setModal({ active: false, dataID: 1 })}
