@@ -24,7 +24,7 @@ const Card = ({ data, setModal, modal, setMemberData }: CardProps) => {
     data.map((userInfo) => {
       if (userInfo.id === activeUserID) {
         setMemberData(userInfo);
-      }
+      };
     });
   };
 
