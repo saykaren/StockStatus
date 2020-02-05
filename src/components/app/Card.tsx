@@ -19,8 +19,6 @@ interface CardProps {
 }
 
 const Card = ({ data, setModal, modal, setMemberData }: CardProps) => {
-
-
   const handleClick = (activeUserID: number) => {
     setModal({ ...modal, active: true, dataID: activeUserID });
     data.map((userInfo) => {
@@ -37,7 +35,7 @@ const Card = ({ data, setModal, modal, setMemberData }: CardProps) => {
           <ul key={userInfo.id} className="card-individual">
             <li className="card-name-details">
               <label>User Name:</label>
-              {userInfo.name}
+              <div className="card-name-div">{userInfo.name}</div>
             </li>
             <button onClick={() => handleClick(userInfo.id)}>
               More Information
