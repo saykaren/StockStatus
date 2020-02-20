@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './../styling/App.scss';
-import { fetchData } from './../utils/fetchUserData';
+import { fetchData, fetchStock } from './../utils/fetchUserData';
 import Card from './Card';
 import {
   userJsonPlaceHolder,
@@ -14,10 +14,16 @@ const App = () => {
   const [memberData, setMemberData] = useState<dataProps | undefined>();
   const [modal, setModal] = useState({ active: false, dataID: 1 });
 
+  const [stockData, setStockData] = useState();
+
+  console.log(stockData);
+
   useEffect(() => {
     setLoading(true);
     fetchData({ setUserData, setLoading, setError });
+    fetchStock({ setStockData, setLoading, setError });
   }, []);
+
 
   return (
     <div className="App">
