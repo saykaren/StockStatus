@@ -7,6 +7,8 @@ import {
   dataProps,
 } from './../../interface/DataRecipient';
 
+
+
 const App = () => {
   const [userData, setUserData] = useState<userJsonPlaceHolder>([]);
   const [error, setError] = useState(false);
@@ -16,7 +18,12 @@ const App = () => {
 
   const [stockData, setStockData] = useState();
 
+  // let timeSeries = stockData[""Time Series (Daily)""];
+
+  // let testing = stockData['2020-02-20']['1. open'];
+  // console.log(testing);
   console.log(stockData);
+  
 
   useEffect(() => {
     setLoading(true);
