@@ -1,5 +1,5 @@
 import React from 'react';
-import {dailyStockProps} from './../../interface/StockDataInterface';
+import {dailyStockProps, dateDetailsProps, volumeDetailsProps} from './../../interface/StockDataInterface';
 
 // interface dailyStockDetails {
 //     objectDetails: {string:
@@ -15,7 +15,8 @@ interface modalProps {
 interface StockProps {
     stockSymbol: any,
     dateStocks: [string],
-    dailyStock: dailyStockProps,
+    // dailyStock: dateDetailsProps,
+    dailyStock:{string:object},
     setModal: (arg2: modalProps) =>void;
     modal: modalProps;
     // dailyStock: [{2020-02-21:
@@ -58,6 +59,7 @@ const StockCard = ({stockSymbol, dateStocks, dailyStock, modal, setModal}: Stock
                             <h1>{stockSymbol}</h1>
                             <h2>Date:</h2>
                             <p>{date}</p>
+                            {/*<p>{dailyStock['2020-02-20'][openPriceString]}</p>*/}
                             <button onClick={() =>handleClick(date)}>
                                 More information
                             </button>

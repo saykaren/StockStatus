@@ -1,67 +1,50 @@
 import React, { useState, useEffect } from 'react';
 import './../styling/App.scss';
-import { fetchData, fetchStock } from './../utils/fetchUserData';
-import {
-  userJsonPlaceHolder,
-  dataProps,
-} from './../../interface/DataRecipient';
+import { fetchStock } from './../utils/fetchUserData';
 import './../styling/Card.scss';
-import StockCard from "./StockCard";
+import StockCard from './StockCard';
 
 const timeSeries = 'Time Series (Daily)';
 const openPriceString: string = '1. open';
 const highPriceString: string = '2. high';
 
 const App = () => {
-  const [userData, setUserData] = useState<userJsonPlaceHolder>([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [memberData, setMemberData] = useState<dataProps | undefined>();
-  const [modal, setModal] = useState({ active: false, dateString: "" });
+  const [modal, setModal] = useState({ active: false, dateString: '' });
 
-  const [stockData, setStockData] = useState();
-  const [dailyStock, setDailyStock] = useState();
+  const [stockData, setStockData] = useState(); //full API response
+  const [dailyStock, setDailyStock] = useState(); //filtered to Time Series Response
 
-  const [dateStocks, setDateStocks] = useState();
+  const [dateStocks, setDateStocks] = useState(); // Array of dates
   const [stockSymbol, setStockSymbol] = useState('VTI');
   const [inputString, setInputString] = useState();
 
   useEffect(() => {
     setLoading(true);
-    fetchStock({ setStockData, setLoading, setError, stockSymbol});
-    console.log("fetching");
+    fetchStock({ setStockData, setLoading, setError, stockSymbol });
+    console.log('fetching');
   }, [stockSymbol]);
 
   useEffect(() => {
     if (stockData) {
       updateDailyStockData();
-
       const stockTimeSeriesDetails = stockData[timeSeries]; ///
       let specificDatesTimeSeries = Object.keys(stockTimeSeriesDetails); ///dates
       setDateStocks(specificDatesTimeSeries);
-      let ughOpen = Object.values(stockTimeSeriesDetails);
-
     }
   }, [stockData]);
 
   const updateDailyStockData = () => {
-     if(stockData){
+    if (stockData) {
       const timeSeriesDataDetail = stockData[timeSeries];
       setDailyStock(timeSeriesDataDetail);
     }
-
   };
 
-  console.log({dailyStock});
-
-  // if (dailyStock) {
-  //   let hello = Object.values(dailyStock[0]);
-  //   let newObject = Object.values(hello);
-  // }
-  const buttonHandler = ()=>{
-    inputString ? setStockSymbol(inputString) :
-    setStockSymbol('VT')
-    }
+  const buttonHandler = () => {
+    inputString ? setStockSymbol(inputString) : setStockSymbol('VT');
+  };
 
   return (
     <div className="App">
@@ -81,18 +64,18 @@ const App = () => {
                 type="text"
                 name="stockSymbol"
                 id="stockSymbol"
-                onChange={(e) =>setInputString(e.currentTarget.value)}
+                onChange={(e) => setInputString(e.currentTarget.value)}
               />
             </label>
           </form>
           <button onClick={buttonHandler}>Change</button>
 
           <StockCard
-              stockSymbol={stockSymbol}
-              dateStocks={dateStocks}
-              dailyStock={dailyStock}
-              setModal={setModal}
-              modal={modal}
+            stockSymbol={stockSymbol}
+            dateStocks={dateStocks}
+            dailyStock={dailyStock}
+            setModal={setModal}
+            modal={modal}
           />
 
           {dateStocks && (
@@ -112,27 +95,35 @@ const App = () => {
           )}
 
           {modal.active && stockData && (
-              <div className="modal">
-                <h2 className="modal-header">
-                  {stockSymbol} :      {modal.dateString}
-                  <button
-                      className="modal-close"
-                      onClick={() => setModal({ active: false, dateString: "2020-02-20" })}
-                  >
-                    X
-                  </button>
-
-
-                </h2>
-                <div className="modal-content">
-                  <ul>
-                    <li className="modal-details">Open Value: {dailyStock[modal.dateString][openPriceString]}</li>
-                    <li className="modal-details">High Value: {dailyStock[modal.dateString]['2. high']}</li>
-                    <li className="modal-details">Low Value: {dailyStock[modal.dateString]['3. low']}</li>
-                    <li className="modal-details">Close Value: {dailyStock[modal.dateString]['4. close']}</li>
-                  </ul>
-                </div>
+            <div className="modal">
+              <h2 className="modal-header">
+                {stockSymbol} : {modal.dateString}
+                <button
+                  className="modal-close"
+                  onClick={() =>
+                    setModal({ active: false, dateString: '2020-02-20' })
+                  }
+                >
+                  X
+                </button>
+              </h2>
+              <div className="modal-content">
+                <ul>
+                  <li className="modal-details">
+                    Open Value: {dailyStock[modal.dateString][openPriceString]}
+                  </li>
+                  <li className="modal-details">
+                    High Value: {dailyStock[modal.dateString]['2. high']}
+                  </li>
+                  <li className="modal-details">
+                    Low Value: {dailyStock[modal.dateString]['3. low']}
+                  </li>
+                  <li className="modal-details">
+                    Close Value: {dailyStock[modal.dateString]['4. close']}
+                  </li>
+                </ul>
               </div>
+            </div>
           )}
         </main>
       )}
