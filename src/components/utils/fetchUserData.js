@@ -17,15 +17,15 @@ export async function fetchData({ setUserData, setLoading, setError }) {
 // }
 // export default fetchData;
 
-export async function fetchStock({ setStockData, setLoading, setError }){
+export async function fetchStock({ setStockData, setLoading, setError, stockSymbol }){
   // const pointerToThis = this;
   // console.log({pointerToThis});
+    console.log({stockSymbol});
   const API_KEY = '9M0U2R0U59ETQDXY';
   let TimeInterval = '60min';
-  let StockSymbol = 'VTI';
+  let StockSymbol = stockSymbol ? stockSymbol : 'VTI';
   let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${StockSymbol}&outputsize=compact&apikey=${API_KEY}`;
-  let stockChartValuesFunction = [];
-  let stockChartValuePrice = [];
+console.log({API_Call});
 
 
     fetch(API_Call)

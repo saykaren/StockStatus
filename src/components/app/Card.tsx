@@ -19,29 +19,29 @@ interface CardProps {
 }
 
 const Card = ({ data, setModal, modal, setMemberData }: CardProps) => {
-  const handleClick = (activeUserID: number) => {
-    setModal({ ...modal, active: true, dataID: activeUserID });
-    data.map((userInfo) => {
-      if (userInfo.id === activeUserID) {
-        setMemberData(userInfo);
-      };
-    });
-  };
+  // const handleClick = (activeUserID: number) => {
+  //   setModal({ ...modal, active: true, dataID: activeUserID });
+  //   data.map((userInfo) => {
+  //     if (userInfo.id === activeUserID) {
+  //       setMemberData(userInfo);
+  //     };
+  //   });
+  // };
 
   return (
     <section className="card-section">
-      {data &&
-        data.map((userInfo) => (
-          <ul key={userInfo.id} className="card-individual">
-            <li className="card-name-details">
-              <label>User Name:</label>
-              <div className="card-name-div">{userInfo.name}</div>
-            </li>
-            <button onClick={() => handleClick(userInfo.id)}>
-              More Information
-            </button>
-          </ul>
-        ))}
+      {/*{data &&*/}
+      {/*  data.map((userInfo) => (*/}
+      {/*    <ul key={userInfo.id} className="card-individual">*/}
+      {/*      <li className="card-name-details">*/}
+      {/*        <label>User Name:</label>*/}
+      {/*        <div className="card-name-div">{userInfo.name}</div>*/}
+      {/*      </li>*/}
+      {/*      /!*<button onClick={() => handleClick(userInfo.id)}>*!/*/}
+      {/*        More Information*/}
+      {/*      </button>*/}
+      {/*    </ul>*/}
+      {/*  ))}*/}
     </section>
   );
 };
