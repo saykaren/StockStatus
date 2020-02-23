@@ -62,25 +62,35 @@ export async function fetchStock({ setStockData, setLoading, setError }){
 //       .catch((err)=>setError(err));
 // }
 
-fetch(API_Call)
-.then(
-    function(res){
-      return res.json();
-    }
-)
-.then(
-  function(data){
-    for (var key in data['Time Series (Daily)']){
-      setStockData(data['Time Series (Daily)']);
-    }
-  }
- 
-)
-// .then((res)=>setStockData(res))
-.then(setLoading(false))
-      .catch((err)=>setError(err));
-}
+// fetch(API_Call)
+// .then(
+//     function(res){
+//       return res.json();
+//     }
+// )
+// .then(
+//   function(data){
+//     for (var key in data['Time Series (Daily)']){
+//       setStockData(data['Time Series (Daily)']);
+//     }
+//   }
+//
+// )
+// // .then((res)=>setStockData(res))
+// .then(setLoading(false))
+//       .catch((err)=>setError(err));
+// }
 
+    fetch(API_Call)
+        .then(
+            function(res){
+                return res.json();
+            }
+        )
+        .then((res)=>setStockData(res))
+        .then(setLoading(false))
+        .catch((err)=>setError(err));
+}
 
 
 export default fetchData;
