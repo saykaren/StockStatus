@@ -27,59 +27,6 @@ export async function fetchStock({ setStockData, setLoading, setError }){
   let stockChartValuesFunction = [];
   let stockChartValuePrice = [];
 
-  
-
-//   https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=%27VTI%27&interval=%2760min%27outputsize=compact&apikey=%279M0U2R0U59ETQDXY%27;
-// //https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MSFT&outputsize=full&apikey=9M0U2R0U59ETQDXY
-//   fetch(API_Call)
-//       .then(
-//           function(res){
-//             return res.json();
-//           }
-//       )
-//       .then((res)=>setStockData(res))
-//       .then(setLoading(false))
-//       .catch((err)=>setError(err));
-// }
-// fetch(API_Call)
-// .then(
-//     function(res){
-//       return res.json();
-//     }
-// )
-// .then(
-//   function(data){
-//     for (var key in data['Time Series (Daily)']){
-//       stockChartValuesFunction.push(key);
-//       stockChartValuePrice.push(data['Time Series (Daily)'][key]['1. open']);
-//     }
-//     console.log(stockChartValuePrice);
-//   }
-
-  
-// )
-// .then(setLoading(false))
-//       .catch((err)=>setError(err));
-// }
-
-// fetch(API_Call)
-// .then(
-//     function(res){
-//       return res.json();
-//     }
-// )
-// .then(
-//   function(data){
-//     for (var key in data['Time Series (Daily)']){
-//       setStockData(data['Time Series (Daily)']);
-//     }
-//   }
-//
-// )
-// // .then((res)=>setStockData(res))
-// .then(setLoading(false))
-//       .catch((err)=>setError(err));
-// }
 
     fetch(API_Call)
         .then(
@@ -92,5 +39,27 @@ export async function fetchStock({ setStockData, setLoading, setError }){
         .catch((err)=>setError(err));
 }
 
+//         fetch(API_Call)
+//         .then(
+//             function(res){
+//                 console.log(res);
+//                 console.log(res.json);
+//                 console.log(res.text);
+//             }
+//         )
+//
+// }
+
+// Response {type: "cors", url: "https://www.alphavantage.co/query?function=TIME_SE…ol=VTI&outputsize=compact&apikey=9M0U2R0U59ETQDXY", redirected: false, status: 200, ok: true, …}
+// type: "cors"
+// url: "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=VTI&outputsize=compact&apikey=9M0U2R0U59ETQDXY"
+// redirected: false
+// status: 200
+// ok: true
+// statusText: "OK"
+// headers: Headers {}
+// body: (...)
+// bodyUsed: false
+// __proto__: Response
 
 export default fetchData;
