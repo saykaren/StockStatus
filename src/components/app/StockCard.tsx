@@ -1,24 +1,25 @@
 import React from 'react';
 import {dailyStockProps, dateDetailsProps, volumeDetailsProps} from './../../interface/StockDataInterface';
 
-// interface dailyStockDetails {
-//     objectDetails: {string:
-//             {string: string}
-//     }
-// }
 
 interface modalProps {
     active: boolean;
     dateString: string;
 }
 
+interface openDataProps {
+    object: string,
+}
+
+
 interface StockProps {
     stockSymbol: any,
     dateStocks: [string],
     // dailyStock: dateDetailsProps,
     dailyStock:{string:object},
-    setModal: (arg2: modalProps) =>void;
-    modal: modalProps;
+    setModal: (arg2: modalProps) =>void,
+    modal: modalProps,
+    dailyOpenData: [openDataProps],
     // dailyStock: [{2020-02-21:
     //                 {
     //                     '1. open': "170.9500",
@@ -31,19 +32,13 @@ interface StockProps {
 }
 
 
-const StockCard = ({stockSymbol, dateStocks, dailyStock, modal, setModal}: StockProps)=>{
+const StockCard = ({stockSymbol, dateStocks, dailyStock, modal, setModal, dailyOpenData}: StockProps)=>{
 
     const handleClick = (activeUserID: string) => {
       setModal({ ...modal, active: true, dateString: activeUserID });
-      console.log({activeUserID});
-      // data.map((userInfo) => {
-      //   if (userInfo.id === activeUserID) {
-      //     setMemberData(userInfo);
-      //   };
-      // });
-
     };
-
+    // const abcdef = dailyOpenData[0]['1. open'];
+    console.log({dailyOpenData});
     const timeSeries = 'Time Series (Daily)';
     const openPriceString: string = '1. open';
     const highPriceString: string = '2. high';

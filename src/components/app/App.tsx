@@ -15,6 +15,7 @@ const App = () => {
 
   const [stockData, setStockData] = useState(); //full API response
   const [dailyStock, setDailyStock] = useState(); //filtered to Time Series Response
+  const [dailyOpenData, setDailyOpenData] = useState();
 
   const [dateStocks, setDateStocks] = useState(); // Array of dates
   const [stockSymbol, setStockSymbol] = useState('VTI');
@@ -23,7 +24,6 @@ const App = () => {
   useEffect(() => {
     setLoading(true);
     fetchStock({ setStockData, setLoading, setError, stockSymbol });
-    console.log('fetching');
   }, [stockSymbol]);
 
   useEffect(() => {
@@ -32,6 +32,10 @@ const App = () => {
       const stockTimeSeriesDetails = stockData[timeSeries]; ///
       let specificDatesTimeSeries = Object.keys(stockTimeSeriesDetails); ///dates
       setDateStocks(specificDatesTimeSeries);
+
+      let specificOpenData = Object.values(stockTimeSeriesDetails);
+      console.log({specificOpenData});
+
     }
   }, [stockData]);
 
@@ -49,15 +53,15 @@ const App = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <label>Address Book</label>
+        <label>Stock Checker</label>
       </header>
-      {error ? <div>{error}</div> : <></>}
+      {error ? <div>Whoops my bad</div> : <></>}
       {loading ? (
         <div>Loading, Please wait</div>
       ) : (
         <main>
-          <h1 className="card-individual">{stockSymbol}</h1>
-          <form className="card-individual">
+          <div className="card-individual">
+          <form>
             <label>
               Stock Symbol:
               <input
@@ -69,6 +73,7 @@ const App = () => {
             </label>
           </form>
           <button onClick={buttonHandler}>Change</button>
+          </div>
 
           <StockCard
             stockSymbol={stockSymbol}
@@ -76,6 +81,7 @@ const App = () => {
             dailyStock={dailyStock}
             setModal={setModal}
             modal={modal}
+            dailyOpenData={dailyOpenData}
           />
 
           {dateStocks && (
