@@ -38,13 +38,13 @@ const StockCard = ({stockSymbol, dateStocks, dailyStock, modal, setModal, dailyO
       setModal({ ...modal, active: true, dateString: activeUserID });
     };
     // const abcdef = dailyOpenData[0]['1. open'];
-    console.log({dailyOpenData});
+    // console.log({dailyOpenData});
     const timeSeries = 'Time Series (Daily)';
     const openPriceString: string = '1. open';
     const highPriceString: string = '2. high';
 
     // const value = dailyStock['0']["2020-02-21"][openPriceString];
-    console.log({dailyStock});
+    // console.log({dailyStock});
     return(
         <div>
             {dateStocks && (

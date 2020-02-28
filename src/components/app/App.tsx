@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './../styling/App.scss';
-import { fetchStock } from './../utils/fetchUserData';
+import { fetchStock, fetchForBatch } from './../utils/fetchUserData';
 import './../styling/Card.scss';
 import StockCard from './StockCard';
 
@@ -15,36 +15,57 @@ const App = () => {
 
   const [stockData, setStockData] = useState(); //full API response
   const [dailyStock, setDailyStock] = useState(); //filtered to Time Series Response
-  const [dailyOpenData, setDailyOpenData] = useState();
 
-  const [dateStocks, setDateStocks] = useState(); // Array of dates
+  // const [dateStocks, setDateStocks] = useState(); // Array of dates
   const [stockSymbol, setStockSymbol] = useState('VTI');
   const [inputString, setInputString] = useState();
+
+  const [VOOStockData, setVOOStockData] = useState(); //VOO open prices
+  const [VTIStockData, setVTIStockData] = useState(); //VTI open prices
+  const [VTStockData, setVTStockData] = useState(); //VT open price
+
+  const todaysDate = new Date();
+
+  const todaysDateString = `${todaysDate.getFullYear()}-0${todaysDate.getMonth()+1}-${todaysDate.getDate()}`;
+
+  console.log({VOOStockData});
+  console.log(todaysDateString.toString());
+
+
+  // console.log({dailyStock});
+  // console.log({VTIStockData});
+  if(VTIStockData){
+    console.log(VTStockData.length);
+  }
 
   useEffect(() => {
     setLoading(true);
     fetchStock({ setStockData, setLoading, setError, stockSymbol });
   }, [stockSymbol]);
 
-  useEffect(() => {
-    if (stockData) {
-      updateDailyStockData();
-      const stockTimeSeriesDetails = stockData[timeSeries]; ///
-      let specificDatesTimeSeries = Object.keys(stockTimeSeriesDetails); ///dates
-      setDateStocks(specificDatesTimeSeries);
+  useEffect(()=>{
+    setLoading(true);
+    refreshing();
+  }, []);
 
-      let specificOpenData = Object.values(stockTimeSeriesDetails);
-      console.log({specificOpenData});
+  const refreshing = ()=>{
+    fetchForBatch({setLoading, setError, setVOOStockData, setVTIStockData, setVTStockData, stockSymbol, setStockData});
+  }
+  // useEffect(() => {
+  //   if (stockData) {
+  //     updateDailyStockData();
+  //     const stockTimeSeriesDetails = stockData[timeSeries]; ///
+  //     let specificDatesTimeSeries = Object.keys(stockTimeSeriesDetails); ///dates
+  //     setDateStocks(specificDatesTimeSeries);
+  //   }
+  // }, [stockData]);
 
-    }
-  }, [stockData]);
-
-  const updateDailyStockData = () => {
-    if (stockData) {
-      const timeSeriesDataDetail = stockData[timeSeries];
-      setDailyStock(timeSeriesDataDetail);
-    }
-  };
+  // const updateDailyStockData = () => {
+  //   if (stockData) {
+  //     const timeSeriesDataDetail = stockData[timeSeries];
+  //     setDailyStock(timeSeriesDataDetail);
+  //   }
+  // };
 
   const buttonHandler = () => {
     inputString ? setStockSymbol(inputString) : setStockSymbol('VT');
@@ -61,44 +82,115 @@ const App = () => {
       ) : (
         <main>
           <div className="card-individual">
-          <form>
-            <label>
-              Stock Symbol:
-              <input
-                type="text"
-                name="stockSymbol"
-                id="stockSymbol"
-                onChange={(e) => setInputString(e.currentTarget.value)}
-              />
-            </label>
-          </form>
-          <button onClick={buttonHandler}>Change</button>
+            <form>
+              <label>
+                Stock Symbol:
+                <input
+                  type="text"
+                  name="stockSymbol"
+                  id="stockSymbol"
+                  onChange={(e) => setInputString(e.currentTarget.value)}
+                />
+              </label>
+            </form>
+            <button onClick={buttonHandler}>Change</button>
+          </div>
+          <div className='card-individual'>
+            <button onClick={()=>refreshing()} >Refresh </button>
           </div>
 
-          <StockCard
-            stockSymbol={stockSymbol}
-            dateStocks={dateStocks}
-            dailyStock={dailyStock}
-            setModal={setModal}
-            modal={modal}
-            dailyOpenData={dailyOpenData}
-          />
+          <div className='stock-section'>
+            {VOOStockData &&
+            (<div className='card-individual'>
+              <h1>VOO</h1>
+              {(VOOStockData.length>1) ?
+                  (<h2>Open Price:{VOOStockData[0]}</h2>) :
+                  <div>Loading</div>
+              }
+            </div>)
+            }
 
-          {dateStocks && (
-            <div className="stock-section">
-              {dateStocks.map((date: string, index: number) => (
-                <div key={index} className="card-individual">
-                  <h1>{stockSymbol}</h1>
-                  <h2>Date:</h2>
-                  <p>{date}</p>
-                  <h2>Open Price:</h2>
-                  <p>{dailyStock[date][openPriceString]}</p>
-                  <h2>High Price:</h2>
-                  <p>{dailyStock[date][highPriceString]}</p>
-                </div>
-              ))}
+            {VTIStockData &&
+            (<div className='card-individual'>
+              <h1>VTI</h1>
+              {(VTIStockData.length>1) ?
+                  (<h2>Open Price:{VTIStockData[0]}</h2>) :
+                  <div>Loading</div>
+              }
+            </div>)
+            }
+
+            {VTStockData &&
+            (<div className='card-individual'>
+              <h1>VT</h1>
+              {(VOOStockData.length>1) ?
+                  (<h2>Open Price:{VOOStockData[0]}</h2>) :
+                  <div>Loading</div>
+              }
+            </div>)
+            }
+          </div>
+
+          {VOOStockData &&
+            (
+            <div className='stock-section'>
+              <div className='card-individual'>
+                <h1>VOO</h1>
+                <h2>Open Price:</h2>
+                <span>{VOOStockData[0]}</span>
+              </div>
+              <div className='card-individual'>
+                <h1>VTI</h1>
+                {(VTIStockData.length>1) ?
+                    (<h2>Open Price:{VTIStockData[0]}</h2>) :
+                    <div>Loading</div>
+                }
+
+              </div>
+              <div className='card-individual'>
+                <h1>VT</h1>
+                <h2>Open Price: {VTStockData[0]}</h2>
+                <div>{VTStockData[0]}</div>
+              </div>
             </div>
-          )}
+          )
+          }
+
+          {/*{dateStocks && (*/}
+          {/*    <div className="stock-section">*/}
+          {/*          <div className="card-individual">*/}
+          {/*            <h1>{stockSymbol}</h1>*/}
+          {/*            <h2>Open Price:</h2>*/}
+          {/*            <p>{dailyStock[todaysDateString][openPriceString]}</p>*/}
+          {/*          </div>*/}
+          {/*     </div>*/}
+          {/*)}*/}
+
+
+          {/*<StockCard*/}
+          {/*  stockSymbol={stockSymbol}*/}
+          {/*  dateStocks={dateStocks}*/}
+          {/*  dailyStock={dailyStock}*/}
+          {/*  setModal={setModal}*/}
+          {/*  modal={modal}*/}
+          {/*  dailyOpenData={dailyOpenData}*/}
+          {/*/>*/}
+
+          {/*{dateStocks && (*/}
+          {/*  <div className="stock-section">*/}
+          {/*    {dateStocks.map((date: string, index: number) => (*/}
+          {/*      <div key={index} className="card-individual">*/}
+          {/*        <h1>{stockSymbol}</h1>*/}
+          {/*        <h2>Date:</h2>*/}
+          {/*        <p>{date}</p>*/}
+          {/*        <h2>Open Price:</h2>*/}
+          {/*        <p>{dailyStock[date][openPriceString]}</p>*/}
+          {/*        <h2>High Price:</h2>*/}
+          {/*        <p>{dailyStock[date][highPriceString]}</p>*/}
+          {/*      </div>*/}
+          {/*    ))}*/}
+          {/*  </div>*/}
+          {/*)}*/}
 
           {modal.active && stockData && (
             <div className="modal">
