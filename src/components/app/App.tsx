@@ -28,16 +28,6 @@ const App = () => {
 
   const todaysDateString = `${todaysDate.getFullYear()}-0${todaysDate.getMonth()+1}-${todaysDate.getDate()}`;
 
-  console.log({VOOStockData});
-  console.log(todaysDateString.toString());
-
-
-  // console.log({dailyStock});
-  // console.log({VTIStockData});
-  if(VTIStockData){
-    console.log(VTStockData.length);
-  }
-
   useEffect(() => {
     setLoading(true);
     fetchStock({ setStockData, setLoading, setError, stockSymbol });
@@ -51,21 +41,6 @@ const App = () => {
   const refreshing = ()=>{
     fetchForBatch({setLoading, setError, setVOOStockData, setVTIStockData, setVTStockData, stockSymbol, setStockData});
   }
-  // useEffect(() => {
-  //   if (stockData) {
-  //     updateDailyStockData();
-  //     const stockTimeSeriesDetails = stockData[timeSeries]; ///
-  //     let specificDatesTimeSeries = Object.keys(stockTimeSeriesDetails); ///dates
-  //     setDateStocks(specificDatesTimeSeries);
-  //   }
-  // }, [stockData]);
-
-  // const updateDailyStockData = () => {
-  //   if (stockData) {
-  //     const timeSeriesDataDetail = stockData[timeSeries];
-  //     setDailyStock(timeSeriesDataDetail);
-  //   }
-  // };
 
   const buttonHandler = () => {
     inputString ? setStockSymbol(inputString) : setStockSymbol('VT');
@@ -130,41 +105,6 @@ const App = () => {
             </div>)
             }
           </div>
-
-          {VOOStockData &&
-            (
-            <div className='stock-section'>
-              <div className='card-individual'>
-                <h1>VOO</h1>
-                <h2>Open Price:</h2>
-                <span>{VOOStockData[0]}</span>
-              </div>
-              <div className='card-individual'>
-                <h1>VTI</h1>
-                {(VTIStockData.length>1) ?
-                    (<h2>Open Price:{VTIStockData[0]}</h2>) :
-                    <div>Loading</div>
-                }
-
-              </div>
-              <div className='card-individual'>
-                <h1>VT</h1>
-                <h2>Open Price: {VTStockData[0]}</h2>
-                <div>{VTStockData[0]}</div>
-              </div>
-            </div>
-          )
-          }
-
-          {/*{dateStocks && (*/}
-          {/*    <div className="stock-section">*/}
-          {/*          <div className="card-individual">*/}
-          {/*            <h1>{stockSymbol}</h1>*/}
-          {/*            <h2>Open Price:</h2>*/}
-          {/*            <p>{dailyStock[todaysDateString][openPriceString]}</p>*/}
-          {/*          </div>*/}
-          {/*     </div>*/}
-          {/*)}*/}
 
 
           {/*<StockCard*/}
