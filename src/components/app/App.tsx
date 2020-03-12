@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './../styling/App.scss';
-import { fetchStock, fetchForBatch } from './../utils/fetchUserData';
+import {
+  fetchStock,
+  fetchForBatch,
+  fetchingEachNow,
+} from './../utils/fetchUserData';
 import './../styling/Card.scss';
 // import StockCard from './StockCard';
 
@@ -17,8 +21,9 @@ const App = () => {
   const [dailyStock, setDailyStock] = useState(); //filtered to Time Series Response
 
   // const [dateStocks, setDateStocks] = useState(); // Array of dates
-  const [stockSymbol, setStockSymbol] = useState('VTI');
+  const [stockSymbol, setStockSymbol] = useState('SPTM');
   const [inputString, setInputString] = useState();
+  const [activeClick, setActiveClick] = useState();
 
   const [vooStockData, setVOOStockData] = useState(); //VOO open prices
   const [vtiStockData, setVTIStockData] = useState(); //VTI open prices
@@ -27,6 +32,7 @@ const App = () => {
   const [lastRefreshedDate, setLastRefreshedDate] = useState();
 
   const todaysDate = new Date();
+  console.log({ stockData });
 
   const todaysDateString = `${todaysDate.getFullYear()}-0${todaysDate.getMonth() +
     1}-${todaysDate.getDate()}`;
@@ -35,6 +41,11 @@ const App = () => {
     setLoading(true);
     fetchStock({ setStockData, setLoading, setError, stockSymbol });
   }, [stockSymbol]);
+
+  // useEffect(() => {
+  //   setLoading(true);
+  //   fetchStock({ setStockData, setLoading, setError, stockSymbol });
+  // }, [activeClick]);
 
   useEffect(() => {
     setLoading(true);
@@ -54,13 +65,14 @@ const App = () => {
     });
   };
 
-  const clickFetch = (fetchSymbol: string) =>{
-    console.log('hi');
-    // fetchSingleStock ({
-    //   setLoading,
-    //   setError,
+  const clickFetch = (fetchSymbol: string) => {
+    // console.log('hi');
     //
-    // })
+    // let result = fetchSymbol;
+    // let symbolTest = 'VTI';
+    // console.log({ fetchSymbol });
+    // fetchStock({ setStockData, setLoading, setError, fetchSymbol });
+    // // fetchingEachNow({symbolTest, setVTIStockData, setLoading, setError})
   };
 
   const buttonHandler = () => {
@@ -93,6 +105,7 @@ const App = () => {
           </div>
           <div className="card-individual">
             <button onClick={() => refreshing()}>Refresh </button>
+            <button onClick={() => setActiveClick(true)}>Fetch Again</button>
           </div>
 
           <div className="stock-section">
@@ -103,10 +116,13 @@ const App = () => {
                   <div>
                     <h2>Open Price:{vooStockData[0]}</h2>
                     <span>Date: {lastRefreshedDate} </span>
-                    <button onClick={()=>clickFetch("VOO")}>Fetch</button>
                   </div>
                 ) : (
-                  <div>Loading</div>
+                  <div>
+                    <h2>Loading</h2>
+                    {/*<button onClick={() => clickFetch('VOO')}>Fetch</button>*/}
+                    {/*<button onClick={()=> setActiveClick(true)}>Fetch Again</button>*/}
+                  </div>
                 )}
               </div>
             )}
@@ -118,10 +134,13 @@ const App = () => {
                   <div>
                     <h2>Open Price:{vtiStockData[0]}</h2>
                     <span>Date: {lastRefreshedDate} </span>
-                    <button onClick={()=>clickFetch("VTI")}>Fetch</button>
                   </div>
                 ) : (
-                  <div>Loading</div>
+                  <div>
+                    <h2>Loading</h2>
+                    {/*<button onClick={() => clickFetch('VTI')}>Fetch</button>*/}
+                    {/*<button onClick={()=> setActiveClick(true)}>Fetch Again</button>*/}
+                  </div>
                 )}
               </div>
             )}
@@ -130,12 +149,34 @@ const App = () => {
               <div className="card-individual">
                 <h1>VT</h1>
                 {vtStockData.length > 1 ? (
-                    <div>
-                      <h2>Open Price:{vtStockData[0]}</h2>
-                      <span>Date: {lastRefreshedDate} </span>
-                    </div>
+                  <div>
+                    <h2>Open Price:{vtStockData[0]}</h2>
+                    <span>Date: {lastRefreshedDate} </span>
+                  </div>
                 ) : (
-                  <div>Loading</div>
+                  <div>
+                    <h2>Loading</h2>
+                    {/*<button onClick={() => clickFetch('VT')}>Fetch</button>*/}
+                    {/*<button onClick={()=> setActiveClick(true)}>Fetch Again</button>*/}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {stockData && (
+              <div className="card-individual">
+                <h1>{stockSymbol}</h1>
+                {stockData.length > 1 ? (
+                  <div>
+                    <h2>Open Price:{stockData[0]}</h2>
+                    <span>Date: {lastRefreshedDate} </span>
+                  </div>
+                ) : (
+                  <div>
+                    <h2>Loading</h2>
+                    {/*<button onClick={() => clickFetch('VT')}>Fetch</button>*/}
+                    {/*<button onClick={()=> setActiveClick(true)}>Fetch Again</button>*/}
+                  </div>
                 )}
               </div>
             )}

@@ -28,23 +28,22 @@ export async function fetchForBatch({
   setStockData,
   setLastRefreshedDate,
 }) {
-    const API_KEY = '9M0U2R0U59ETQDXY';
-    let vooStockData = 'VOO';
-    let vtiStockData = 'VTI';
-    let vtStockData = 'VT';
-    // let specialStockSymbol = stockSymbol ? stockSymbol : 'VTI';
-    // let API_Call_VOO = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${vooStockData}&outputsize=compact&apikey=${API_KEY}`;
-    // let API_Call_VTI = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${vtiStockData}&outputsize=compact&apikey=${API_KEY}`;
-    // let API_Call_VT = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${vtStockData}&outputsize=compact&apikey=${API_KEY}`;
-    // let API_Call_Stock_Custom = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${specialStockSymbol}&outputsize=compact&apikey=${API_KEY}`;
+  const API_KEY = '9M0U2R0U59ETQDXY';
+  let vooStockData = 'VOO';
+  let vtiStockData = 'VTI';
+  let vtStockData = 'VT';
+  // let specialStockSymbol = stockSymbol ? stockSymbol : 'VTI';
+  // let API_Call_VOO = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${vooStockData}&outputsize=compact&apikey=${API_KEY}`;
+  // let API_Call_VTI = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${vtiStockData}&outputsize=compact&apikey=${API_KEY}`;
+  // let API_Call_VT = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${vtStockData}&outputsize=compact&apikey=${API_KEY}`;
+  // let API_Call_Stock_Custom = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${specialStockSymbol}&outputsize=compact&apikey=${API_KEY}`;
 
-    // https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=VTI&outputsize=compact&apikey=9M0U2R0U59ETQDXY
+  // https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=VTI&outputsize=compact&apikey=9M0U2R0U59ETQDXY
 
-
-    let stockVOODetails = [];
-    let stockVTIDetails = [];
-    let stockVTDetails = [];
-    // let stockSpecialDetails = [];
+  let stockVOODetails = [];
+  let stockVTIDetails = [];
+  let stockVTDetails = [];
+  // let stockSpecialDetails = [];
 
   const fetchingNow = (thisSymbol, setFunction, stockArray) => {
     // stockOneDetails.length = 0;
@@ -55,7 +54,7 @@ export async function fetchForBatch({
       })
       .then(function(data) {
         for (var key in data['Time Series (Daily)']) {
-            stockArray.push(data['Time Series (Daily)'][key]['1. open']);
+          stockArray.push(data['Time Series (Daily)'][key]['1. open']);
         }
         setLastRefreshedDate(data['Meta Data']['3. Last Refreshed']);
       })
@@ -65,13 +64,40 @@ export async function fetchForBatch({
       .catch((err) => setError(err) && (stockArray.length = 0));
   };
   fetchingNow(vtiStockData, setVTIStockData, stockVTIDetails);
-  console.log({stockVTIDetails});
+  console.log({ stockVTIDetails });
   fetchingNow(vooStockData, setVOOStockData, stockVOODetails);
-  console.log({stockVOODetails});
+  console.log({ stockVOODetails });
   fetchingNow(vtStockData, setVTStockData, stockVTDetails);
-  console.log({stockVTDetails});
+  console.log({ stockVTDetails });
   // fetchingNow(specialStockSymbol, setStockData, stockSpecialDetails);
   // console.log({stockSpecialDetails});
+}
+
+export async function fetchingEachNow({
+  thisSymbol,
+  setFunction,
+  setLoading,
+  setError,
+}) {
+  const API_KEY = '9M0U2R0U59ETQDXY';
+  let setLastRefreshedDate;
+  let stockArray = [];
+  // stockOneDetails.length = 0;
+  let API_Call_Variable_2 = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${thisSymbol}&outputsize=compact&apikey=${API_KEY}`;
+  fetch(API_Call_Variable_2)
+    .then(function(res) {
+      return res.json();
+    })
+    .then(function(data) {
+      for (var key in data['Time Series (Daily)']) {
+        stockArray.push(data['Time Series (Daily)'][key]['1. open']);
+      }
+      setLastRefreshedDate(data['Meta Data']['3. Last Refreshed']);
+    })
+
+    .then(setFunction(stockArray))
+    .then(setLoading(false))
+    .catch((err) => setError(err) && (stockArray.length = 0));
 }
 
 //     fetch(API_Call_VTI)
